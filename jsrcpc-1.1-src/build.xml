@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Build file for jsrcpc" default="compile" basedir=".">
+  <!-- build-specific properties -->
+  <property file="${user.home}/.ant.properties"/>
+  <property file="build.properties"/>
+  <!-- set global properties for this build -->
+  <property name="src.dir" value="src"/>
+	<property name="etc.dir" value="etc"/>
+	<property name="lib.dir" value="lib"/>
+  <property name="build.dir" value="build"/>
+  <property name="javadoc.dir" value="javadoc"/>
+  <property name="release.dir" value="release/"/>
+  <!-- main class for run target -->
+  <!-- =================================================================== -->
+  <!-- Class paths                                                         -->
+  <!-- =================================================================== -->
+	<path id="compile.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+			<include name="**/*.zip"/>
+		</fileset>
+	</path>
+	<path id="run.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+			<include name="**/*.zip"/>
+		</fileset>
+	</path>
+  <path id="javadoc.src.path">
+    <pathelement location="./src/"/>
+  </path>
+  <!-- =================================================================== -->
+  <!-- Init targets                                                        -->
+  <!-- =================================================================== -->
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.dir}"/>
+		<copy todir="${build.dir}">
+			<fileset dir="./res">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Compile: Default                                                    -->
+  <!-- =================================================================== -->
+  <target name="compile" depends="init" description="Compiles all Java sources">
+		<javac destdir="${build.dir}" classpathref="compile.class.path"
+			deprecation="off" debug="true">
+			<src path="${src.dir}"/>
+			<include name="**/*.java"/>
+		</javac>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- RELEASE                                                             -->
+  <!-- =================================================================== -->
+  <target name="makerelease" description="Generates a release" depends="clean-all">
+    <antcall target="javadoc"/>
+    <antcall target="bin"/>
+    <antcall target="src"/>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Documentation                                                       -->
+  <!-- =================================================================== -->
+  <target name="javadoc" description="Generate JavaDoc HTML pages" depends="init">
+    <mkdir dir="${javadoc.dir}"/>
+		<javadoc sourcepath="${src.dir}" packagenames="*"
+			classpathref="compile.class.path"  destdir="${javadoc.dir}"
+			author="true" use="true" verbose="false" package="true">
+    </javadoc>
+  </target>
+	<!-- =================================================================== -->
+	<!-- Jar targets                                                         -->
+	<!-- =================================================================== -->
+	<target name="jar" depends="compile"
+		description="Builds a JAR file">
+		<delete file="jsrcpc-${release}.jar"/>
+		<jar destfile="jsrcpc-${release}.jar"
+			manifest="./src/manifest.mf">
+			<fileset dir="${build.dir}/" includes="**/*.class"/>
+			<fileset dir="${build.dir}/" includes="**/*.properties"/>
+		</jar>
+	</target>
+	
+	<!-- =================================================================== -->
+	<!-- Zip targets                                                         -->
+	<!-- =================================================================== -->
+	<target name="bin" depends="jar"
+		description="Builds the ZIP file containing all stuff">
+		<property name="bindir" value="${release.dir}/jsrcpc-${release}-bin"/>
+		<delete file="jsrcpc-${release}-bin.zip"/>
+		<mkdir dir=""/>
+		<copy todir="${bindir}">
+			<fileset dir="">
+				<filename name="jsrcpc-${release}.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${bindir}/${lib.dir}">
+			<fileset dir="${lib.dir}"  excludes="**/.svn/"/>
+		</copy>
+		<copy todir="${bindir}/${etc.dir}">
+			<fileset dir="${etc.dir}"  excludes="**/.svn/"/>
+		</copy>
+		<tar destfile="jsrcpc-${release}-bin.tar.bz2" basedir="${release.dir}"
+      compression="bzip2"
+			/>
+		<zip destfile="jsrcpc-${release}-bin.zip" basedir="${release.dir}"/>
+		
+	</target>
+	
+	<target name="src" depends="javadoc"
+		description="Builds the ZIP file containing all stuff">
+		<property name="srcdir" value="${release.dir}/jsrcpc-${release}-src"/>
+		<delete file="jsrcpc-${release}-src.zip"/>
+		
+		<copy todir="${srcdir}">
+			<fileset dir="."
+				includes="build.xml, build.properties"
+				excludes="**/.svn/"/>
+		</copy>
+		<copy todir="${srcdir}/${lib.dir}">
+			<fileset dir="${lib.dir}"  excludes="**/.svn/"/>
+		</copy>
+		<copy todir="${srcdir}/${src.dir}">
+			<fileset dir="${src.dir}"  excludes="**/.svn/"/>
+		</copy>
+		<copy todir="${srcdir}/${etc.dir}">
+			<fileset dir="${etc.dir}"  excludes="**/.svn/"/>
+		</copy>
+		<tar destfile="jsrcpc-${release}-src.tar.bz2" basedir="${release.dir}"
+      compression="bzip2"
+			/>
+		<zip destfile="jsrcpc-${release}-src.zip" basedir="${release.dir}"
+			/>
+		<delete file="ChangeLog"/>
+	</target>
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target name="clean" description="Removes generated class files">
+    <!-- Delete the ${build.dir} directory tree -->
+    <delete dir="${build.dir}"/>
+  </target>
+  <target name="clean-javadoc" description="Removes generated Javadoc files">
+    <delete dir="${javadoc.dir}"/>
+  </target>
+  <target name="clean-all" depends="clean, clean-javadoc" description="Removes all generated artifacts">
+  </target>
+</project>

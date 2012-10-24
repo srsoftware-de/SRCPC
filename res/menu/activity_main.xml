@@ -6,4 +6,5 @@
     <item android:id="@+id/menu_layout" android:title="Layout"></item>
     <item android:id="@+id/function" android:title="Funktionen"></item>
     <item android:id="@+id/menu_server" android:title="Servereinstellungen"></item>
+    <item android:id="@+id/help" android:title="@string/help"></item>
 </menu>

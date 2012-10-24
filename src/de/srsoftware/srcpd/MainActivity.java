@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,25 +49,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
         setContentView(R.layout.activity_main);
         createListeners();
         createLayout();
-        firstStart();
-    }		
-		
-    private void firstStart() {
-			final SharedPreferences settings=getSharedPreferences("SRCPD", MODE_PRIVATE);
-			if (!settings.contains("fiststart")){
-				AlertDialog.Builder adb=new Builder(this);
-				adb.setMessage(R.string.copyright);
-				adb.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						settings.edit().putBoolean("firststart", false).commit();
-						
-					}
-				});
-			}
-			
-		}
+     }		
 
 		private void createListeners() {    	
     	normalListener = new ActionPerformer();
@@ -175,23 +158,33 @@ public class MainActivity extends Activity implements OnClickListener, android.c
     public boolean onOptionsItemSelected(MenuItem item) {
     	boolean	result=super.onOptionsItemSelected(item);
     	int i=item.getItemId();
-    	//System.out.println(i);
+    	System.out.println(i);
     	switch (i){
-    	case 2131165190:
+    	case R.id.menu_layout:
     		currentListener=layoutEditListener;
     		break;
-    	case 2131165191:    	
+    	case R.id.function:    	
     		currentListener=functionEditListener;
     		break;
-    	case 2131165189:
+    	case R.id.menu_normal:
     		currentListener=normalListener;
     		break;
-    	case 2131165192:
+    	case R.id.menu_server:
     		startActivity(new Intent(this,ServerSettings.class));
+    		break;
+    	case R.id.help:
+    		startHelp();
+    		break;
     	}
     	System.out.println(currentListener);
     	return result;
     }
+
+		private void startHelp() {
+			Intent browser=new Intent(Intent.ACTION_VIEW,Uri.parse("http://srsoftware.de/SRCPDoku"));
+			startActivity(browser);
+		}
+
 
 		public void onClick(View v) {
 			currentListener.onClick(v);
@@ -257,6 +250,8 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 		@Override
 		protected void onResume() {
 			super.onResume();
+      if (firstStart()) return;
+
 			SharedPreferences prefs=getSharedPreferences("SRCPD", Activity.MODE_PRIVATE);
 			String host=prefs.getString("host", "");
 			int port=prefs.getInt("port", 4303);
@@ -264,8 +259,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				AlertDialog.Builder db=new Builder(this);
 				db.setMessage(R.string.no_host);
 				db.setPositiveButton(R.string.ok, this);				
-				db.show();
-				
+				db.show();				
 			}else try {
 				srcpsession=new SRCPSession(host, port);
 				srcpsession.connect();
@@ -274,6 +268,27 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 			} catch (SRCPException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		
+    private boolean firstStart() {
+			final SharedPreferences settings=getSharedPreferences("SRCPD", MODE_PRIVATE);
+			if (!settings.contains("firststart")){
+				AlertDialog.Builder adb=new Builder(this);
+				adb.setMessage(R.string.copyright);
+				adb.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						settings.edit().putBoolean("firststart", false).commit();
+						onResume();
+
+					}
+				});
+				adb.create().show();
+				return true;
+			}			
+			return false;
 		}
 		
 		@Override

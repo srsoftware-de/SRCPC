@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">SRCPD</string>
+    <string name="app_name">SRCPC</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="title_activity_main">SRSoftware - SRCPD</string>
+    <string name="title_activity_main">SRSoftware - SRCPC</string>
     <string name="title_activity_server_settings">Servereinstellungen</string>
     <string name="preferences">Servereinstellungen</string>
     <string name="settings_bg_color_confirm">neue Farbe</string>
@@ -16,10 +16,12 @@
     <string name="cancel">Abbrechen</string>
     <string name="tile_horizontally">horizontal teilen</string>
     <string name="tile_vertically">vertikal teilen</string>
-    <string name="new_button">Neuer Knopf</string>
+    <string name="new_button">Wählen Sie im Menü den "Layout-" oder "Funktion""-Modus und dann nochmal den Knopf, um ihn anzupassen</string>
     <string name="delete">entfernen</string>
     <string name="layout">Anordnung</string>
-    <string name="no_host">Die Host-Angabe fehlt in den Servereinstellungen. Ändern Sie dies unter Menü &gt; Servereinstellungen</string>
-    <string name="copyright">Der SRSoftware SRCPClient wurde entwickelt unter Verwendung der JSRCP (http://sourceforge.net/projects/jsrcpc/) und dem Yogli Color Picker Dialog (http://tinyurl.com/yogli-picker). Das Programm steht unter der Gnu Public Licens 2 und kann frei verwendet und modifiziert werden.</string>
+    <string name="no_host">Bevor Sie diese Software verwenden können, muss in den Servereinstellungen ein Host angegeben werden, auf dem der SRCPDaemon läuft. Sie können dies jederzeit unter Menü &gt; Servereinstellungen ändern.</string>
+    <string name="copyright">Der SRSoftware SRCPClient wurde entwickelt unter Verwendung der JSRCP (http://sourceforge.net/projects/jsrcpc/) und dem Yogli Color Picker Dialog (http://tinyurl.com/yogli-picker).\nDas Programm steht unter der Gnu Public License 2 und kann frei verwendet und modifiziert werden.</string>
+    <string name="server_Settings_explanation">Geben Sie oben an, unter welcher Adresse das Programm einen SRCPD-Server (\"daemon\", SRCPD) erreichen kann, und auf welchem Port. Drücken Sie auf die \"Zurück\"-Taste um die Einstellungen zu speichern und zum Hauptfenster zu gelangen.</string>
+    <string name="help">Hilfe</string>
 
 </resources>

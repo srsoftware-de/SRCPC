@@ -278,7 +278,6 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				adb.setMessage(R.string.copyright);
 				adb.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 					
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						settings.edit().putBoolean("firststart", false).commit();
 						onResume();
@@ -304,7 +303,6 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 			} catch (SRCPException e) {}
 		}
 
-		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			Intent einst=new Intent(this, ServerSettings.class);
 			startActivity(einst);			

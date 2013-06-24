@@ -260,13 +260,13 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				db.setMessage(R.string.no_host);
 				db.setPositiveButton(R.string.ok, this);				
 				db.show();				
-			}else try {
-				srcpsession=new SRCPSession(host, port);
-				srcpsession.connect();
+			}else {
+/*				Vector<String> params=new Vector<String>();
+				params.add(host);
+				params.add(""+port);*/
+				srcpsession=new ConnectionThread().doInBackground(host,""+port);
 				Function.setSrcpSession(srcpsession);	
 				Toast.makeText(this, "Serververbindung hergestellt", Toast.LENGTH_LONG).show();
-			} catch (SRCPException e) {
-				e.printStackTrace();
 			}
 		}
 		

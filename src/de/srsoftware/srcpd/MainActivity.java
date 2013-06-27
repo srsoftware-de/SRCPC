@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +47,9 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 		@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy); 
         setContentView(R.layout.activity_main);
         createListeners();
         createLayout();
@@ -266,7 +270,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				Function.setSrcpSession(srcpsession);	
 				Toast.makeText(this, "Serververbindung hergestellt", Toast.LENGTH_LONG).show();
 			} catch (SRCPException e) {
-				e.printStackTrace();
+				e.printStackTrace();//*/
 			}
 		}
 		

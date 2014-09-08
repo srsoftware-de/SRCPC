@@ -31,7 +31,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.Toast;
 import de.dermoba.srcp.client.SRCPSession;
 import de.dermoba.srcp.common.exception.SRCPException;
 

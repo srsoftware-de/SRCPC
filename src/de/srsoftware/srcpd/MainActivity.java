@@ -251,6 +251,30 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 			}
 		}
 		
+		private class ConnectionThread extends Thread{
+			private String host;
+			private int port;
+			
+			public ConnectionThread(String host, int port) {
+				this.host=host;
+				this.port=port;
+			}
+
+			@Override
+			public void run() {
+				super.run();
+				try {
+					srcpsession=new SRCPSession(host, port);
+					srcpsession.connect();
+					Function.setSrcpSession(srcpsession);	
+					Toast.makeText(null, "Serververbindung hergestellt", Toast.LENGTH_LONG).show();
+				} catch (SRCPException e) {
+					Toast.makeText(null, "Fehler bei Verbindungsherstellung!", Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		@Override
 		protected void onResume() {
 			super.onResume();
@@ -264,13 +288,9 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				db.setMessage(R.string.no_host);
 				db.setPositiveButton(R.string.ok, this);				
 				db.show();				
-			}else try {
-				srcpsession=new SRCPSession(host, port);
-				srcpsession.connect();
-				Function.setSrcpSession(srcpsession);	
-				Toast.makeText(this, "Serververbindung hergestellt", Toast.LENGTH_LONG).show();
-			} catch (SRCPException e) {
-				e.printStackTrace();//*/
+			} else if (srcpsession==null){
+				ConnectionThread conThread=new ConnectionThread(host,port);
+				conThread.start();
 			}
 		}
 		

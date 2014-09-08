@@ -16,12 +16,11 @@ public class ActionPerformer implements OnClickListener {
 
 	public void onClick(View v) {
 			if (v instanceof CommandButton){
-			try {
-				((CommandButton) v).click();
-			} catch (SRCPException e) {
-				e.printStackTrace();
+				try {
+					((CommandButton) v).click();
+				} catch (SRCPException e) {
+					e.printStackTrace();
+				}
 			}
-		}
 	}
-
 }

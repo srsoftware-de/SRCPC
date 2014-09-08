@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 		private LayoutEditor layoutEditListener;
 		private FunctionEditor functionEditListener;
 		private boolean loaded;
-		private SRCPSession srcpsession;
+		private SRCPSession srcpsession;		
 		
 		@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -266,10 +266,8 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				try {
 					srcpsession=new SRCPSession(host, port);
 					srcpsession.connect();
-					Function.setSrcpSession(srcpsession);	
-					Toast.makeText(null, "Serververbindung hergestellt", Toast.LENGTH_LONG).show();
+					Function.setSrcpSession(srcpsession);
 				} catch (SRCPException e) {
-					Toast.makeText(null, "Fehler bei Verbindungsherstellung!", Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				}
 			}
@@ -295,7 +293,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 		}
 		
 		
-    private boolean firstStart() {
+		private boolean firstStart() {
 			final SharedPreferences settings=getSharedPreferences("SRCPD", MODE_PRIVATE);
 			if (!settings.contains("firststart")){
 				AlertDialog.Builder adb=new Builder(this);

@@ -49,6 +49,7 @@ public final class R {
         public static final int menu_settings=0x7f040001;
         public static final int new_button=0x7f040010;
         public static final int no_host=0x7f040013;
+        public static final int no_server_connection=0x7f040017;
         public static final int ok=0x7f04000c;
         public static final int preferences=0x7f040004;
         public static final int server_Settings_explanation=0x7f040015;

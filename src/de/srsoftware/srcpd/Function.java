@@ -10,6 +10,8 @@ package de.srsoftware.srcpd;
 
 import java.util.TreeMap;
 
+import android.accounts.NetworkErrorException;
+
 import de.dermoba.srcp.client.CommandChannel;
 import de.dermoba.srcp.client.SRCPSession;
 import de.dermoba.srcp.common.exception.SRCPException;
@@ -42,7 +44,7 @@ public class Function {
 		return "<function>\n"+code+"\n</function>\n";
 	}
 
-	public void execute() throws SRCPException {
+	public void execute() throws SRCPException, NetworkErrorException {
 		execute(code);
 		
 	}
@@ -52,16 +54,15 @@ public class Function {
 		channel=session.getCommandChannel();
 	}
 	
-	static void send(String cmd) {
+	static void send(String cmd) throws SRCPException, NetworkErrorException {
 		System.out.println("Function.send("+cmd+")");
-		if (channel!=null) try {
-			channel.send(cmd.trim());
-		} catch (SRCPException e) {
-			e.printStackTrace();
-		}		
+		channel.send(cmd.trim());
 	}
 
-	public static void execute(String string) throws SRCPException {		
+	public static void execute(String string) throws SRCPException, NetworkErrorException {
+			if (srcpdsession==null || channel==null) {
+				throw new NetworkErrorException("Not connected to server!");
+			}		
 			String[] commands = string.split("/");
 			for (String cmd : commands) {
 				cmd=parse(cmd.trim());

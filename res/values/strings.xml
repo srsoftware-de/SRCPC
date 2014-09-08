@@ -23,5 +23,6 @@
     <string name="copyright">Der SRSoftware SRCPClient wurde entwickelt unter Verwendung der JSRCP (http://sourceforge.net/projects/jsrcpc/) und dem Yogli Color Picker Dialog (http://tinyurl.com/yogli-picker).\nDas Programm steht unter der Gnu Public License 2 und kann frei verwendet und modifiziert werden.</string>
     <string name="server_Settings_explanation">Geben Sie oben an, unter welcher Adresse das Programm einen SRCPD-Server (\"daemon\", SRCPD) erreichen kann, und auf welchem Port. Drücken Sie auf die \"Zurück\"-Taste um die Einstellungen zu speichern und zum Hauptfenster zu gelangen.</string>
     <string name="help">Hilfe</string>
+    <string name="no_server_connection">Diese Aktion kann nicht ausgeführt werden, da beim Herstellen der Serververbindung ein Fehler aufgetreten ist.</string>
 
 </resources>

@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import de.dermoba.srcp.common.exception.SRCPException;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
@@ -51,7 +52,7 @@ public class CommandButton extends Button {
 		
 	}
 
-	public void click() throws SRCPException{
+	public void click() throws SRCPException, NetworkErrorException{
 		if (functions.isEmpty()) return;
 		functions.get(functionIndex).execute();
 		functionIndex++;

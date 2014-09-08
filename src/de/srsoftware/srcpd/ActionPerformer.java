@@ -8,19 +8,41 @@
 */
 package de.srsoftware.srcpd;
 
-import de.dermoba.srcp.common.exception.SRCPException;
+import android.accounts.NetworkErrorException;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
+import de.dermoba.srcp.common.exception.SRCPException;
 
-public class ActionPerformer implements OnClickListener {
+public class ActionPerformer implements OnClickListener,DialogInterface.OnClickListener {
 
+	private Context context;
+	
+	public ActionPerformer(Context c) {
+		this.context=c;
+	}
+	
 	public void onClick(View v) {
 			if (v instanceof CommandButton){
 				try {
 					((CommandButton) v).click();
 				} catch (SRCPException e) {
 					e.printStackTrace();
+				} catch (NetworkErrorException e) {
+					e.printStackTrace();
+					AlertDialog.Builder db=new Builder(context);
+					db.setMessage(R.string.no_server_connection);
+					db.setPositiveButton(R.string.ok, this);				
+					db.show();				
 				}
 			}
+	}
+
+	public void onClick(DialogInterface dialog, int which) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -56,7 +56,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
      }		
 
 		private void createListeners() {    	
-    	normalListener = new ActionPerformer();
+    	normalListener = new ActionPerformer(this);
     	layoutEditListener = new LayoutEditor(this);  
     	functionEditListener=new FunctionEditor(this);
     	currentListener=normalListener;
@@ -322,7 +322,7 @@ public class MainActivity extends Activity implements OnClickListener, android.c
 				srcpsession=null;
 				loaded=false;
 				Function.reset();
-			} catch (SRCPException e) {}
+			} catch (Exception e) {}
 		}
 
 		public void onClick(DialogInterface dialog, int which) {

@@ -8,10 +8,10 @@
 */
 package de.srsoftware.srcpd;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
 
@@ -38,11 +38,12 @@ public class ServerSettings extends Activity {
     	Editor editor = getSharedPreferences("SRCPD", Activity.MODE_PRIVATE).edit();
     	String host=((EditText)findViewById(R.id.editHost)).getText().toString();
     	editor.putString("host", host);
-    	String portString=((EditText)findViewById(R.id.editHost)).getText().toString();
+    	String portString=((EditText)findViewById(R.id.editPort)).getText().toString();
     	try {
     		int port=Integer.parseInt(portString);
       	editor.putInt("port", port);
-      } catch (NumberFormatException nfe){}
+      } catch (NumberFormatException nfe){
+      }
     	editor.commit();
     }
 }
